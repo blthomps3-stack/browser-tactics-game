@@ -1,4 +1,5 @@
 import { GameLoop } from "./gameloop.js";
+import { Unit, Player } from "./Unit.js";
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
@@ -26,6 +27,8 @@ function generateGrid() {
     return(Array(MAP_HEIGHT).fill().map(() => Array(MAP_WIDTH).fill(0)));
 }
 
+const player = new Player(2, 5, '#e9c0ff', 5);
+const units = [player];
 
 function update(deltaTime) {}
 function render() {
@@ -36,6 +39,7 @@ function render() {
             ctx.fillRect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE -1, TILE_SIZE -1);
         }
     }
+    units.forEach((unit) => unit.renderUnit(TILE_SIZE, ctx));
 }
 
 canvas.width = TILE_SIZE * MAP_WIDTH;

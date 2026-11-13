@@ -1,4 +1,5 @@
 import { GameLoop } from "./gameloop.js";
+import { Unit, Player } from "./Unit.js";
 
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
@@ -26,12 +27,8 @@ function generateGrid() {
     return(Array(MAP_HEIGHT).fill().map(() => Array(MAP_WIDTH).fill(0)));
 }
 
-const player = {
-    x: 2,
-    y: 5,
-    color: '#51217e'
-};
-
+const player = new Player(2, 5, '#e9c0ff', 5);
+const units = [player];
 
 function update(deltaTime) {}
 function render() {
@@ -42,18 +39,7 @@ function render() {
             ctx.fillRect(col * TILE_SIZE, row * TILE_SIZE, TILE_SIZE -1, TILE_SIZE -1);
         }
     }
-    // I think in the future to render non-hardcoded entities, I can give them a function with the instructions on how to render them
-    // And just iterate through the list of them here, calling each one's render function
-    ctx.fillStyle = player.color;
-    ctx.beginPath();
-    ctx.arc(
-        (player.x * TILE_SIZE) + (TILE_SIZE / 2),
-        (player.y * TILE_SIZE) + (TILE_SIZE / 2),
-        TILE_SIZE / 2.5,
-        0,
-        Math.PI * 2
-    );
-    ctx.fill();
+    units.forEach((unit) => unit.renderUnit(TILE_SIZE, ctx));
 }
 
 canvas.width = TILE_SIZE * MAP_WIDTH;

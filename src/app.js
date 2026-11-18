@@ -27,7 +27,7 @@ function generateGrid() {
     return(Array(MAP_HEIGHT).fill().map(() => Array(MAP_WIDTH).fill(0)));
 }
 
-const player = new Player(2, 5, '#e9c0ff', 5);
+const player = new Player(2, 5, '#652886', 5);
 const units = [player];
 
 function update(deltaTime) {}

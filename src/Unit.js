@@ -11,11 +11,13 @@ export class Unit {
         this.#speed = speed;
     }
 
-    set x(int) {this.#x = int;}
-    get x() {return this.#x}
-    set y(int) {this.#y = int;}
-    get y() {return this.#y}
-    get color() {return this.#color}
+    set x(int) { this.#x = int; }
+    get x() { return this.#x; }
+    set y(int) { this.#y = int; }
+    get y() { return this.#y; }
+    get color() { return this.#color; }
+    set speed(int) { this.#speed = int; }
+    get speed() { return this.#speed; }
     
     renderUnit(size, ctx) {
         ctx.fillStyle = this.color;

@@ -17,14 +17,16 @@ export class GridPoint {
     get contains() { return this.#contains; }
 }
 
-export function getMoveRange(start, speed){
-    var openList = [];
-    var range = [];
+export function getMoveRange(grid, unit){
+    let start = grid[unit.y][unit.x]
+    let speed = unit.speed;
+    let openList = [];
+    let range = [];
     start.g = 0;
     openList.push(start);
 
     while(openList.length > 0){
-        var current = openList[0];
+        let current = openList[0];
 
         if(current.g >= speed){
             return range;
@@ -32,10 +34,10 @@ export function getMoveRange(start, speed){
 
         openList.shift();
         current.closed = true;
-        var neighbors = current.neighbors;
+        let neighbors = current.neighbors;
         
-        for(var i = 0; i < neighbors.length; i++){
-            var neighbor = neighbors[i];
+        for(let i = 0; i < neighbors.length; i++){
+            let neighbor = neighbors[i];
             if(!neighbor.closed && !neighbor.contains){
                 if(!neighbor.g){
                     neighbor.g = current.g + 1;

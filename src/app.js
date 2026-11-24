@@ -64,7 +64,7 @@ const roomGrid = generateGrid();
 const player = new Player(2, 5, '#652886', 5);
 const units = [player];
 
-const moveRange = getMoveRange(roomGrid[5][2], 5);
+const moveRange = getMoveRange(roomGrid, player);
 console.log(moveRange);
 
 function update(deltaTime) {}
@@ -81,9 +81,8 @@ function render() {
         ctx.fillStyle = "#4b7cd0";
         ctx.fillRect(moveRange[i].y * TILE_SIZE, moveRange[i].x * TILE_SIZE, TILE_SIZE -1, TILE_SIZE -1);
     }
-    units.forEach((unit) => unit.renderUnit(TILE_SIZE, ctx));
 
-    
+    units.forEach((unit) => unit.renderUnit(TILE_SIZE, ctx));
 }
 
 canvas.width = TILE_SIZE * MAP_WIDTH;

@@ -16,17 +16,17 @@ const baseGrid = [
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 1, 1, 0, 0, 1],
     [1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+    [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 1, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 0, 0, 1, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 1, 1, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 1, 0, 0, 0, 0, 1, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
@@ -71,16 +71,30 @@ function generateGrid() {
 
 const roomGrid = generateGrid();
 
-const player = new Player(2, 5, '#652886', 5);
+const player = new Player(2, 5, '#652886', 4);
 const units = [player];
 
 let moveRange = getMoveRange(roomGrid, player);
 console.log(moveRange);
 
-player.x = 5;
-player.y = 6;
+function moveUnit(unit, x, y){
+    if(!roomGrid[x][y].contains){
+        roomGrid[unit.x][unit.y].contains = 0;
+        unit.x = x;
+        unit.y = y;
+        roomGrid[x][y].contains = unit;
+    }
+}
 
-moveRange = getMoveRange(roomGrid, player);
+window.addEventListener("click", function(e) {
+    let mouseX = Math.floor(e.offsetX / TILE_SIZE);
+    let mouseY = Math.floor(e.offsetY / TILE_SIZE);
+    console.log(`(${mouseX}, ${mouseY})`);
+    if(moveRange.includes(roomGrid[mouseX][mouseY])){
+        moveUnit(player, mouseX, mouseY);
+        moveRange = getMoveRange(roomGrid, player);
+    }
+});
 
 function update(deltaTime) {}
 function render() {

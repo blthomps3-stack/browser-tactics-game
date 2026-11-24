@@ -18,7 +18,7 @@ export class GridPoint {
 }
 
 export function getMoveRange(grid, unit){
-    let start = grid[unit.y][unit.x]
+    let start = grid[unit.x][unit.y]
     let speed = unit.speed;
     let openList = [];
     let range = [];

@@ -12,10 +12,10 @@ const MAP_HEIGHT = 10;
 const baseGrid = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 0, 1, 1, 0, 0, 1],
+    [1, 0, 0, 0, 0, 1, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -74,8 +74,13 @@ const roomGrid = generateGrid();
 const player = new Player(2, 5, '#652886', 5);
 const units = [player];
 
-const moveRange = getMoveRange(roomGrid, player);
+let moveRange = getMoveRange(roomGrid, player);
 console.log(moveRange);
+
+player.x = 5;
+player.y = 6;
+
+moveRange = getMoveRange(roomGrid, player);
 
 function update(deltaTime) {}
 function render() {

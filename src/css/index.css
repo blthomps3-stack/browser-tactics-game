@@ -17,3 +17,8 @@ canvas {
     border: 2px solid #215E61;
     background-color: #111;
 }
+
+button {
+    height: 180px;
+    width: 270px;
+}

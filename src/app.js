@@ -72,10 +72,8 @@ function generateGrid() {
 const roomGrid = generateGrid();
 
 const player = new Player(2, 5, '#652886', 4);
+roomGrid[player.x][player.y].contains = player;
 const units = [player];
-
-let moveRange = getMoveRange(roomGrid, player);
-console.log(moveRange);
 
 function moveUnit(unit, x, y){
     if(!roomGrid[x][y].contains){
@@ -86,13 +84,26 @@ function moveUnit(unit, x, y){
     }
 }
 
-window.addEventListener("click", function(e) {
+let selection = null;
+let controlMode = "Default"; // 3 planned modes are Default, Info, and Action (info and action are merged currently)
+let currentRange = [];
+
+canvas.addEventListener("click", function(e) {
     let mouseX = Math.floor(e.offsetX / TILE_SIZE);
     let mouseY = Math.floor(e.offsetY / TILE_SIZE);
-    console.log(`(${mouseX}, ${mouseY})`);
-    if(moveRange.includes(roomGrid[mouseX][mouseY])){
-        moveUnit(player, mouseX, mouseY);
-        moveRange = getMoveRange(roomGrid, player);
+
+    // console.log(`(${mouseX}, ${mouseY})`)
+    if (controlMode === "Default") {
+        if(roomGrid[mouseX][mouseY].contains !== 0 && roomGrid[mouseX][mouseY].contains !== 1){
+            selection = roomGrid[mouseX][mouseY].contains;
+            controlMode = "Action";
+            currentRange = getMoveRange(roomGrid, selection);
+        }
+    } else if (controlMode === "Action") {
+        if(currentRange.includes(roomGrid[mouseX][mouseY])){
+            moveUnit(player, mouseX, mouseY);
+            currentRange = [];
+        }
     }
 });
 
@@ -106,9 +117,9 @@ function render() {
         }
     }
     
-    for(let i = 0; i < moveRange.length; i++){
+    for(let i = 0; i < currentRange.length; i++){
         ctx.fillStyle = "#4b7cd0";
-        ctx.fillRect(moveRange[i].x * TILE_SIZE, moveRange[i].y * TILE_SIZE, TILE_SIZE -1, TILE_SIZE -1);
+        ctx.fillRect(currentRange[i].x * TILE_SIZE, currentRange[i].y * TILE_SIZE, TILE_SIZE -1, TILE_SIZE -1);
     }
 
     units.forEach((unit) => unit.renderUnit(TILE_SIZE, ctx));

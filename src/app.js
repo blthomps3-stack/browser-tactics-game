@@ -107,6 +107,15 @@ canvas.addEventListener("click", function(e) {
     }
 });
 
+
+window.addEventListener("keydown", function(e) {
+    if(e.key == "Escape") {
+        controlMode = "Default";
+        selection = null;
+        currentRange = [];
+    }
+});
+
 function update(deltaTime) {}
 function render() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
